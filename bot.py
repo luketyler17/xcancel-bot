@@ -36,14 +36,17 @@ async def on_message(message):
     if match:
         if match.group(3) is None:
             await message.channel.send("Error parsing X Url")
-            
+            return
+        
         info = match.group(3)
         
         # if check_embed_type(message):
             
         new_url = f"{BASE_URL}{info}"
+
+        modified_message = TWITTER_URL_REGEX.sub(new_url, message.content)
         
-        await message.channel.send(f"{message.author.mention} Posted this link from X: {new_url}")
+        await message.channel.send(f"{message.author.mention} shared: {modified_message}")
         
         await message.delete()
 
