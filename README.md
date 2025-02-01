@@ -8,6 +8,11 @@ This Discord bot listens to messages in a specific channel, detects Twitter URLs
 - Posts a rich embed with the new URL, tagging the original user.
 - Deletes the original message to maintain channel cleanliness.
 
+
+## Feature Roadmap
+- [X] Differentiate between image & video embedding and regular non-image/video based tweet to have the redirect to xcancel work for all users
+- [X] Remove UTM Tracking from all twitter links seen
+- Create duplicate link tracker (3/4 day max memory) and send user DM with location of previously sent tweet so they can view the discussion
 ---
 
 ## Setup and Installation
@@ -85,7 +90,7 @@ python bot.py
 ---
 
 ## Customization
-- **Replacement URL Base**: Customize `REPLACEMENT_URL_BASE` in the code to match your redirection needs.
+- **Replacement URL Base**: Customize `BASE_URL` in the code to match your redirection needs.
 
 ---
 
@@ -118,8 +123,6 @@ The original message is deleted.
   - **Send Messages**
   - **Embed Links**
   - **Manage Messages**
-- The bot will only work in the channel specified by the `TARGET_CHANNEL_ID` variable.
-
 ---
 
 ## Troubleshooting

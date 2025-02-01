@@ -19,11 +19,14 @@ client = discord.Client(intents=intents)
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-TWITTER_URL_REGEX = re.compile(r"(https?:\/\/)?(www\.)?x\.com\/([\w/?=&%-]+)")
+# V.1 REGEX TWITTER_URL_REGEX = re.compile(r"(https?:\/\/)?(www\.)?(?:x\.com|xcancel\.com|twitter\.com|fxtwitter\.com|vxtwitter\.com)\/([\w/?=&%-]+)")
+
+# V.2 REGEX
+TWITTER_URL_REGEX = re.compile(r"(https?:\/\/)?(www\.)?(?:x\.com|xcancel\.com|twitter\.com|fxtwitter\.com|vxtwitter\.com)\/([^\s]+)")
 
 @bot.event
 async def on_ready():
-    print(f"Bot have logged in as {bot.user}")
+    print(f"Bot has logged in as {bot.user}")
 
 @bot.event
 async def on_message(message):
@@ -35,13 +38,18 @@ async def on_message(message):
     match = TWITTER_URL_REGEX.search(message.content)
     if match:
         if match.group(3) is None:
-            await message.channel.send("Error parsing X Url")
+            print("Error Parsing URL")
             return
         
         info = match.group(3)
-        
+        info = info.split("?")[0]
         # if check_embed_type(message):
             
+        if not check_embed_type(message):
+            print("Not Vid Embed")
+            BASE_URL = "https://xcancel.com/"
+
+        
         new_url = f"{BASE_URL}{info}"
 
         modified_message = TWITTER_URL_REGEX.sub(new_url, message.content)
